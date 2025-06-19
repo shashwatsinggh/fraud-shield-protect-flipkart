@@ -11,6 +11,7 @@ import MoneySavedComparison from "./fraud-protect/MoneySavedComparison";
 import ProtectionMetrics from "./fraud-protect/ProtectionMetrics";
 import FraudActivityDashboard from "./fraud-protect/FraudActivityDashboard";
 import PlanComparison from "./fraud-protect/PlanComparison";
+import PlanBenefits from "./fraud-protect/PlanBenefits";
 import TestimonialCarousel from "./fraud-protect/TestimonialCarousel";
 import FAQSection from "./fraud-protect/FAQSection";
 import PricingModal from "./fraud-protect/PricingModal";
@@ -20,6 +21,13 @@ const FraudProtectDashboard = () => {
   const [isPremium, setIsPremium] = useState(false);
   const [showPricingModal, setShowPricingModal] = useState(false);
   const [showCustomPlanChat, setShowCustomPlanChat] = useState(false);
+
+  const handleUpgrade = (couponCode?: string) => {
+    if (couponCode === "PREMIUM100") {
+      setIsPremium(true);
+      setShowPricingModal(false);
+    }
+  };
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-blue-50">
@@ -48,10 +56,32 @@ const FraudProtectDashboard = () => {
 
         {/* Money Saved Comparison */}
         <div className="mt-8">
-          <MoneySavedComparison 
-            isPremium={isPremium} 
-            onUpgrade={() => setShowPricingModal(true)} 
-          />
+          {isPremium ? (
+            <Card className="border-2 border-blue-200">
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2">
+                  <Crown className="w-5 h-5 text-yellow-500" />
+                  Total Money Saved
+                </CardTitle>
+                <CardDescription>
+                  Your fraud protection savings this month
+                </CardDescription>
+              </CardHeader>
+              <CardContent>
+                <div className="text-center p-8">
+                  <div className="text-6xl font-bold bg-gradient-to-r from-yellow-600 to-yellow-700 bg-clip-text text-transparent mb-4">
+                    ₹1,24,680
+                  </div>
+                  <div className="text-lg text-gray-600">Protected from fraud losses</div>
+                </div>
+              </CardContent>
+            </Card>
+          ) : (
+            <MoneySavedComparison 
+              isPremium={isPremium} 
+              onUpgrade={() => setShowPricingModal(true)} 
+            />
+          )}
         </div>
 
         {/* Protection Metrics */}
@@ -62,35 +92,43 @@ const FraudProtectDashboard = () => {
           />
         </div>
 
-        {/* Fraud Activity Dashboard */}
+        {/* Fraud Activity Dashboard - Only show for Premium */}
+        {isPremium && (
+          <div className="mt-8">
+            <FraudActivityDashboard isPremium={isPremium} />
+          </div>
+        )}
+
+        {/* Plan Section */}
         <div className="mt-8">
-          <FraudActivityDashboard isPremium={isPremium} />
+          {isPremium ? (
+            <PlanBenefits />
+          ) : (
+            <PlanComparison onUpgrade={() => setShowPricingModal(true)} />
+          )}
         </div>
 
-        {/* Plan Comparison */}
-        <div className="mt-8">
-          <PlanComparison onUpgrade={() => setShowPricingModal(true)} />
-        </div>
-
-        {/* Upgrade CTAs */}
-        <div className="mt-8 flex flex-col sm:flex-row gap-4 justify-center">
-          <Button 
-            size="lg" 
-            onClick={() => setShowPricingModal(true)}
-            className="bg-gradient-to-r from-blue-600 to-blue-500 hover:from-blue-700 hover:to-blue-600"
-          >
-            <Crown className="w-4 h-4 mr-2" />
-            Upgrade to Premium
-          </Button>
-          <Button 
-            size="lg" 
-            variant="outline"
-            onClick={() => setShowCustomPlanChat(true)}
-            className="border-blue-600 text-blue-600 hover:bg-blue-50"
-          >
-            I want to make my own premium plan
-          </Button>
-        </div>
+        {/* Upgrade CTAs - Only show for Basic users */}
+        {!isPremium && (
+          <div className="mt-8 flex flex-col sm:flex-row gap-4 justify-center">
+            <Button 
+              size="lg" 
+              onClick={() => setShowPricingModal(true)}
+              className="bg-gradient-to-r from-blue-600 to-blue-500 hover:from-blue-700 hover:to-blue-600"
+            >
+              <Crown className="w-4 h-4 mr-2" />
+              Upgrade to Premium
+            </Button>
+            <Button 
+              size="lg" 
+              variant="outline"
+              onClick={() => setShowCustomPlanChat(true)}
+              className="border-blue-600 text-blue-600 hover:bg-blue-50"
+            >
+              I want to make my own premium plan
+            </Button>
+          </div>
+        )}
 
         {/* Testimonials */}
         <div className="mt-12">
@@ -105,7 +143,8 @@ const FraudProtectDashboard = () => {
         {/* Modals */}
         <PricingModal 
           isOpen={showPricingModal} 
-          onClose={() => setShowPricingModal(false)} 
+          onClose={() => setShowPricingModal(false)}
+          onUpgrade={handleUpgrade}
         />
         
         <CustomPlanChatbot 

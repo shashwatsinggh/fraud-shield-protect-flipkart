@@ -4,21 +4,25 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Label } from "@/components/ui/label";
+import { Input } from "@/components/ui/input";
 import { Crown, CreditCard, Calculator } from "lucide-react";
 import { useState } from "react";
 
 interface PricingModalProps {
   isOpen: boolean;
   onClose: () => void;
+  onUpgrade?: (couponCode?: string) => void;
 }
 
-const PricingModal = ({ isOpen, onClose }: PricingModalProps) => {
+const PricingModal = ({ isOpen, onClose, onUpgrade }: PricingModalProps) => {
   const [paymentMethod, setPaymentMethod] = useState("immediate");
+  const [couponCode, setCouponCode] = useState("");
 
   const handleUpgrade = () => {
-    // Handle upgrade logic here
-    console.log("Upgrading with payment method:", paymentMethod);
-    onClose();
+    if (onUpgrade) {
+      onUpgrade(couponCode);
+    }
+    console.log("Upgrading with payment method:", paymentMethod, "Coupon:", couponCode);
   };
 
   return (
@@ -45,6 +49,20 @@ const PricingModal = ({ isOpen, onClose }: PricingModalProps) => {
               </div>
             </CardContent>
           </Card>
+
+          {/* Coupon Code */}
+          <div>
+            <Label htmlFor="coupon" className="text-sm font-medium">
+              Coupon Code (Optional)
+            </Label>
+            <Input
+              id="coupon"
+              placeholder="Enter coupon code"
+              value={couponCode}
+              onChange={(e) => setCouponCode(e.target.value)}
+              className="mt-1"
+            />
+          </div>
 
           {/* Payment Method Selection */}
           <div>
