@@ -11,7 +11,7 @@ interface HeroSectionProps {
 
 const HeroSection = ({ isPremium, onUpgrade }: HeroSectionProps) => {
   return (
-    <Card className="bg-gradient-to-r from-blue-600 to-orange-500 text-white border-0 shadow-2xl">
+    <Card className="bg-gradient-to-r from-blue-600 to-blue-500 text-white border-0 shadow-xl">
       <CardContent className="p-8">
         <div className="flex flex-col lg:flex-row items-center justify-between gap-6">
           <div className="space-y-4 flex-1">
@@ -73,7 +73,6 @@ const HeroSection = ({ isPremium, onUpgrade }: HeroSectionProps) => {
                 >
                   Upgrade to Premium
                 </Button>
-                <p className="text-xs text-blue-100">30-day money-back guarantee</p>
               </>
             )}
           </div>
