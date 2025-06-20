@@ -12,9 +12,10 @@ interface PricingModalProps {
   isOpen: boolean;
   onClose: () => void;
   onUpgrade?: (couponCode?: string) => void;
+  sellerName: string;
 }
 
-const PricingModal = ({ isOpen, onClose, onUpgrade }: PricingModalProps) => {
+const PricingModal = ({ isOpen, onClose, onUpgrade, sellerName }: PricingModalProps) => {
   const [paymentMethod, setPaymentMethod] = useState("immediate");
   const [couponCode, setCouponCode] = useState("");
 
@@ -31,7 +32,7 @@ const PricingModal = ({ isOpen, onClose, onUpgrade }: PricingModalProps) => {
         <DialogHeader>
           <DialogTitle className="flex items-center gap-2">
             <Crown className="w-5 h-5 text-yellow-500" />
-            Upgrade to Premium
+            Upgrade {sellerName} to Premium
           </DialogTitle>
           <DialogDescription>
             Choose your payment method to activate premium protection
@@ -96,7 +97,7 @@ const PricingModal = ({ isOpen, onClose, onUpgrade }: PricingModalProps) => {
 
           {/* Benefits Reminder */}
           <div className="bg-yellow-50 p-4 rounded-lg border border-yellow-200">
-            <h5 className="font-semibold text-yellow-800 mb-2">Premium Benefits:</h5>
+            <h5 className="font-semibold text-yellow-800 mb-2">Premium Benefits for {sellerName}:</h5>
             <ul className="text-sm text-yellow-700 space-y-1">
               <li>• Save up to ₹79,450 more per month</li>
               <li>• Automatic order verification</li>

@@ -9,9 +9,10 @@ import { Bot, Send, MessageCircle, X, Loader2 } from "lucide-react";
 
 interface StaticAIFraudChatbotProps {
   isPremium: boolean;
+  sellerName: string;
 }
 
-const StaticAIFraudChatbot = ({ isPremium }: StaticAIFraudChatbotProps) => {
+const StaticAIFraudChatbot = ({ isPremium, sellerName }: StaticAIFraudChatbotProps) => {
   const [isOpen, setIsOpen] = useState(false);
   const [messages, setMessages] = useState<Array<{id: number, type: 'user' | 'bot', content: string, timestamp: Date}>>([]);
   const [currentMessage, setCurrentMessage] = useState("");
@@ -135,7 +136,7 @@ Our data shows sellers using these methods see significant improvements in fraud
           <div className="flex items-center justify-between p-4 border-b bg-gradient-to-r from-blue-600 to-blue-500 text-white rounded-t-lg">
             <div className="flex items-center gap-2">
               <Bot className="w-5 h-5" />
-              <span className="font-semibold">AI Fraud Protector</span>
+              <span className="font-semibold">AI Fraud Protector for {sellerName}</span>
             </div>
             <Button
               variant="ghost"
@@ -155,7 +156,7 @@ Our data shows sellers using these methods see significant improvements in fraud
                   <div className="flex items-start gap-2">
                     <Bot className="w-6 h-6 text-blue-600 mt-1" />
                     <div className="bg-blue-50 p-3 rounded-lg flex-1">
-                      <p className="text-sm">Hi! I'm your AI Fraud Protection assistant. Ask me anything about reducing fraud in your business.</p>
+                      <p className="text-sm">Hi! I'm your AI Fraud Protection assistant for {sellerName}. Ask me anything about reducing fraud in your business.</p>
                     </div>
                   </div>
                   

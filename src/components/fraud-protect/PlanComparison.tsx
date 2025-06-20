@@ -1,4 +1,3 @@
-
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
@@ -6,9 +5,10 @@ import { Check, X, Crown, Info } from "lucide-react";
 
 interface PlanComparisonProps {
   onUpgrade: () => void;
+  sellerName: string;
 }
 
-const PlanComparison = ({ onUpgrade }: PlanComparisonProps) => {
+const PlanComparison = ({ onUpgrade, sellerName }: PlanComparisonProps) => {
   const features = [
     {
       feature: "Order Verification",
@@ -88,7 +88,7 @@ const PlanComparison = ({ onUpgrade }: PlanComparisonProps) => {
     <TooltipProvider>
       <Card>
         <CardHeader className="text-center">
-          <CardTitle className="text-2xl">Plan Comparison</CardTitle>
+          <CardTitle className="text-2xl">Plan Comparison for {sellerName}</CardTitle>
           <CardDescription>
             See the key differences between Basic and Premium plans
           </CardDescription>
@@ -157,7 +157,7 @@ const PlanComparison = ({ onUpgrade }: PlanComparisonProps) => {
               className="bg-gradient-to-r from-blue-600 to-blue-500 hover:from-blue-700 hover:to-blue-600"
             >
               <Crown className="w-4 h-4 mr-2" />
-              Upgrade to Premium
+              Upgrade to Premium for {sellerName}
             </Button>
           </div>
         </CardContent>
