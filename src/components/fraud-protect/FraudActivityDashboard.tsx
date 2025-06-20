@@ -1,13 +1,11 @@
-
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Input } from "@/components/ui/input";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { Shield, Star, Eye, RotateCcw, Lock, Info, CreditCard, MapPin, UserCheck, CheckSquare, TrendingUp } from "lucide-react";
+import { Shield, Star, Eye, RotateCcw, Lock, Info, CreditCard, MapPin, UserCheck, CheckSquare, TrendingUp, Crown } from "lucide-react";
 import { useState, useMemo } from "react";
 
 interface FraudActivityDashboardProps {
@@ -17,8 +15,6 @@ interface FraudActivityDashboardProps {
 const FraudActivityDashboard = ({ isPremium }: FraudActivityDashboardProps) => {
   const [selectedActivity, setSelectedActivity] = useState<any>(null);
   const [filterType, setFilterType] = useState("all");
-  const [startDate, setStartDate] = useState("");
-  const [endDate, setEndDate] = useState("");
 
   // Generate 100+ fraud activities with varied data
   const generateActivities = () => {
@@ -81,7 +77,7 @@ const FraudActivityDashboard = ({ isPremium }: FraudActivityDashboardProps) => {
       "order-verification": ["Suspicious payment pattern with multiple failed attempts from same device", "High-value order from new customer with inconsistent address", "Payment method linked to known fraudulent activities"],
       "fake-reviews": ["Review posted from same IP as competitor with content manipulation detected", "Rating pattern inconsistent with purchase history and product category", "Multiple reviews from single device with similar writing style"],
       "doorstep-verification": ["High-value order in fraud-prone area requiring identity verification", "Customer requested OBD due to previous delivery issues in the locality", "Product category has high return rates requiring verification"],
-      "return-fraud": ["Customer attempted to return damaged product claiming it as defective with prior damage visible", "Serial number mismatch between delivered and returned product detected", "Return request timing suspicious with no usage evidence provided"],
+      "return-fraud": ["Customer attempted to return damaged product claiming it as defective with prior damage visible", "Serial number mismatch between delivered and returned product detected", "Serial number mismatch between delivered and returned product detected", "Return request timing suspicious with no usage evidence provided"],
       "part-payment": ["Customer opted for part payment to reduce fraud risk on high-value electronics", "COD amount exceeded threshold requiring partial advance payment", "Payment method verification required for expensive item purchase"],
       "spf-payout": ["Seller qualified for enhanced protection due to premium subscription benefits", "Claim amount increased under premium SPF ceiling policy", "Additional coverage provided for high-risk category products"],
       "pincode-block": ["Area identified as high-risk based on historical fraud data and delivery failures", "Multiple fraud incidents reported from this location in recent weeks", "Delivery partner marked location as unsafe for high-value deliveries"],
@@ -122,36 +118,81 @@ const FraudActivityDashboard = ({ isPremium }: FraudActivityDashboardProps) => {
 
   const filteredActivities = activities.filter(activity => {
     const matchesType = filterType === "all" || activity.typeId === filterType;
-    const matchesDateRange = (!startDate || activity.date >= startDate) && (!endDate || activity.date <= endDate);
-    return matchesType && matchesDateRange;
+    return matchesType;
   });
 
   if (!isPremium) {
     return (
-      <Card>
+      <Card className="relative">
+        {/* Blur overlay */}
+        <div className="absolute inset-0 bg-white/80 backdrop-blur-sm z-10 rounded-lg flex items-center justify-center">
+          <div className="text-center space-y-4">
+            <div className="w-16 h-16 bg-gradient-to-r from-yellow-500 to-yellow-600 rounded-full flex items-center justify-center mx-auto">
+              <Crown className="w-8 h-8 text-white" />
+            </div>
+            <div>
+              <h3 className="text-xl font-bold mb-2">Detailed Activity Dashboard</h3>
+              <p className="text-gray-600 mb-4">View comprehensive fraud protection logs with Premium</p>
+              <Badge variant="outline" className="text-yellow-600 border-yellow-600">
+                Premium Feature
+              </Badge>
+            </div>
+          </div>
+        </div>
+
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
             Fraud Protection Activity
             <Lock className="w-4 h-4 text-gray-400" />
           </CardTitle>
           <CardDescription>
-            Detailed activity logs available with Premium subscription
+            Comprehensive fraud prevention activity logs ({activities.length} incidents available)
           </CardDescription>
         </CardHeader>
         <CardContent>
-          <div className="text-center py-12 text-gray-500">
-            <Lock className="w-16 h-16 mx-auto mb-4 text-gray-300" />
-            <h3 className="text-lg font-semibold mb-2">Detailed Activity Logs</h3>
-            <p className="mb-4">View detailed fraud prevention actions and reasons with Premium</p>
-            <div className="bg-gray-50 p-4 rounded-lg">
-              <p className="text-sm">Premium features include:</p>
-              <ul className="text-sm mt-2 space-y-1">
-                <li>• Detailed reason for each action</li>
-                <li>• Real-time activity monitoring</li>
-                <li>• Downloadable reports</li>
-                <li>• Historical data analysis</li>
-              </ul>
+          <div className="space-y-4">
+            <div className="flex gap-4">
+              <Select value={filterType} onValueChange={setFilterType}>
+                <SelectTrigger className="w-[240px]">
+                  <SelectValue placeholder="Filter by protection type" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="all">All Protection Types</SelectItem>
+                  <SelectItem value="order-verification">Order Verification</SelectItem>
+                  <SelectItem value="fake-reviews">Fake Reviews</SelectItem>
+                  <SelectItem value="doorstep-verification">Doorstep Verification</SelectItem>
+                </SelectContent>
+              </Select>
             </div>
+
+            <ScrollArea className="h-[400px] w-full border rounded-lg">
+              <Table>
+                <TableHeader>
+                  <TableRow>
+                    <TableHead>Date</TableHead>
+                    <TableHead>Action Type</TableHead>
+                    <TableHead>Listing</TableHead>
+                    <TableHead>Impact</TableHead>
+                    <TableHead>Details</TableHead>
+                  </TableRow>
+                </TableHeader>
+                <TableBody>
+                  {filteredActivities.slice(0, 5).map((activity) => (
+                    <TableRow key={activity.id}>
+                      <TableCell>{activity.date}</TableCell>
+                      <TableCell>{activity.type}</TableCell>
+                      <TableCell>{activity.listingId}</TableCell>
+                      <TableCell>
+                        <Badge variant="outline">{activity.impact}</Badge>
+                      </TableCell>
+                      <TableCell>
+                        <Lock className="w-4 h-4 text-gray-400" />
+                      </TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+            </ScrollArea>
           </div>
         </CardContent>
       </Card>
@@ -171,9 +212,9 @@ const FraudActivityDashboard = ({ isPremium }: FraudActivityDashboardProps) => {
       <CardContent>
         <div className="space-y-4">
           {/* Filters */}
-          <div className="flex flex-col sm:flex-row gap-4">
+          <div className="flex gap-4">
             <Select value={filterType} onValueChange={setFilterType}>
-              <SelectTrigger className="w-full sm:w-[240px]">
+              <SelectTrigger className="w-[240px]">
                 <SelectValue placeholder="Filter by protection type" />
               </SelectTrigger>
               <SelectContent>
@@ -189,22 +230,6 @@ const FraudActivityDashboard = ({ isPremium }: FraudActivityDashboardProps) => {
                 <SelectItem value="smartcheck">SmartCheck</SelectItem>
               </SelectContent>
             </Select>
-            <div className="flex gap-2">
-              <Input
-                type="date"
-                placeholder="Start date"
-                value={startDate}
-                onChange={(e) => setStartDate(e.target.value)}
-                className="w-full sm:w-auto"
-              />
-              <Input
-                type="date"
-                placeholder="End date"
-                value={endDate}
-                onChange={(e) => setEndDate(e.target.value)}
-                className="w-full sm:w-auto"
-              />
-            </div>
           </div>
 
           {/* Activities Table */}

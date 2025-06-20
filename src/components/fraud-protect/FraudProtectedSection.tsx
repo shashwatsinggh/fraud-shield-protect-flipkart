@@ -2,15 +2,14 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Shield, TrendingUp } from "lucide-react";
-import { useState } from "react";
 
 interface FraudProtectedSectionProps {
   isPremium: boolean;
+  timeFrame: string;
+  onTimeFrameChange: (value: string) => void;
 }
 
-const FraudProtectedSection = ({ isPremium }: FraudProtectedSectionProps) => {
-  const [timeFrame, setTimeFrame] = useState("30");
-
+const FraudProtectedSection = ({ isPremium, timeFrame, onTimeFrameChange }: FraudProtectedSectionProps) => {
   const getDataForTimeFrame = (timeFrame: string) => {
     const multiplier = timeFrame === "30" ? 1 : timeFrame === "90" ? 3 : 12;
     return {
@@ -35,7 +34,7 @@ const FraudProtectedSection = ({ isPremium }: FraudProtectedSectionProps) => {
               Your fraud protection performance overview
             </CardDescription>
           </div>
-          <Select value={timeFrame} onValueChange={setTimeFrame}>
+          <Select value={timeFrame} onValueChange={onTimeFrameChange}>
             <SelectTrigger className="w-[180px]">
               <SelectValue />
             </SelectTrigger>

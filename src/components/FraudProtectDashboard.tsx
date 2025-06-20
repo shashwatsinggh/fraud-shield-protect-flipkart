@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -21,6 +22,7 @@ const FraudProtectDashboard = () => {
   const [isPremium, setIsPremium] = useState(false);
   const [showPricingModal, setShowPricingModal] = useState(false);
   const [showCustomPlanChat, setShowCustomPlanChat] = useState(false);
+  const [timeFrame, setTimeFrame] = useState("30");
 
   const handleUpgrade = (couponCode?: string) => {
     if (couponCode === "PREMIUM100") {
@@ -51,7 +53,11 @@ const FraudProtectDashboard = () => {
 
         {/* Fraud Protected Section */}
         <div className="mt-8">
-          <FraudProtectedSection isPremium={isPremium} />
+          <FraudProtectedSection 
+            isPremium={isPremium} 
+            timeFrame={timeFrame}
+            onTimeFrameChange={setTimeFrame}
+          />
         </div>
 
         {/* Money Saved Comparison */}
@@ -64,13 +70,13 @@ const FraudProtectDashboard = () => {
                   Total Money Saved
                 </CardTitle>
                 <CardDescription>
-                  Your fraud protection savings this month
+                  Your fraud protection savings this {timeFrame === "30" ? "month" : timeFrame === "90" ? "quarter" : "year"}
                 </CardDescription>
               </CardHeader>
               <CardContent>
                 <div className="text-center p-8">
                   <div className="text-6xl font-bold bg-gradient-to-r from-yellow-600 to-yellow-700 bg-clip-text text-transparent mb-4">
-                    ₹1,24,680
+                    ₹{(124680 * (timeFrame === "30" ? 1 : timeFrame === "90" ? 3 : 12)).toLocaleString()}
                   </div>
                   <div className="text-lg text-gray-600">Protected from fraud losses</div>
                 </div>
@@ -79,6 +85,7 @@ const FraudProtectDashboard = () => {
           ) : (
             <MoneySavedComparison 
               isPremium={isPremium} 
+              timeFrame={timeFrame}
               onUpgrade={() => setShowPricingModal(true)} 
             />
           )}
@@ -88,14 +95,40 @@ const FraudProtectDashboard = () => {
         <div className="mt-8">
           <ProtectionMetrics 
             isPremium={isPremium} 
+            timeFrame={timeFrame}
             onUpgrade={() => setShowPricingModal(true)} 
           />
         </div>
 
-        {/* Fraud Activity Dashboard - Only show for Premium */}
-        {isPremium && (
+        {/* Fraud Activity Dashboard - Always show but blurred for Basic */}
+        <div className="mt-8">
+          <FraudActivityDashboard isPremium={isPremium} />
+        </div>
+
+        {/* AI Plan Advisor CTA for Basic Users */}
+        {!isPremium && (
           <div className="mt-8">
-            <FraudActivityDashboard isPremium={isPremium} />
+            <Card className="border-2 border-dashed border-blue-300 bg-gradient-to-r from-blue-50 to-blue-100">
+              <CardContent className="p-6">
+                <div className="text-center">
+                  <div className="mb-4">
+                    <div className="w-16 h-16 bg-gradient-to-r from-blue-600 to-blue-500 rounded-full flex items-center justify-center mx-auto mb-3">
+                      <Crown className="w-8 h-8 text-white" />
+                    </div>
+                    <h3 className="text-xl font-bold text-gray-900 mb-2">AI Plan Advisor</h3>
+                    <p className="text-gray-600">Get personalized fraud protection recommendations based on your business needs</p>
+                  </div>
+                  <Button 
+                    size="lg" 
+                    variant="outline"
+                    onClick={() => setShowCustomPlanChat(true)}
+                    className="border-blue-600 text-blue-600 hover:bg-blue-50"
+                  >
+                    I want to make my own premium plan
+                  </Button>
+                </div>
+              </CardContent>
+            </Card>
           </div>
         )}
 
@@ -108,9 +141,9 @@ const FraudProtectDashboard = () => {
           )}
         </div>
 
-        {/* Upgrade CTAs - Only show for Basic users */}
+        {/* Single Upgrade CTA for Basic users */}
         {!isPremium && (
-          <div className="mt-8 flex flex-col sm:flex-row gap-4 justify-center">
+          <div className="mt-8 text-center">
             <Button 
               size="lg" 
               onClick={() => setShowPricingModal(true)}
@@ -118,14 +151,6 @@ const FraudProtectDashboard = () => {
             >
               <Crown className="w-4 h-4 mr-2" />
               Upgrade to Premium
-            </Button>
-            <Button 
-              size="lg" 
-              variant="outline"
-              onClick={() => setShowCustomPlanChat(true)}
-              className="border-blue-600 text-blue-600 hover:bg-blue-50"
-            >
-              I want to make my own premium plan
             </Button>
           </div>
         )}
