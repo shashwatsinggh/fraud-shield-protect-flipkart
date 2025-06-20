@@ -43,7 +43,7 @@ const MoneySavedComparison = ({ isPremium, timeFrame, onUpgrade, sellerName }: M
                 • Orders verified only when requested
                 • Network-level review protection
                 • Standard claim limits
-                • Non-sensitive products >₹800 only
+                • Non-sensitive products over ₹800 only
               </div>
             </div>
 
@@ -71,7 +71,7 @@ const MoneySavedComparison = ({ isPremium, timeFrame, onUpgrade, sellerName }: M
                 • All orders auto-scanned
                 • Advanced sabotage protection
                 • Enhanced claim limits (1% higher SPF)
-                • Products <₹800 also covered
+                • Products under ₹800 also covered
               </div>
               
               {!isPremium && (
