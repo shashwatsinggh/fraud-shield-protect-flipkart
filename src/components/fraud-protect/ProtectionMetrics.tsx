@@ -19,13 +19,11 @@ const ProtectionMetrics = ({ isPremium, timeFrame, onUpgrade, sellerName }: Prot
     {
       title: "Fraud Orders Protected",
       icon: Shield,
-      basic: `${(14000 * multiplier).toLocaleString()} checkouts/month blocked`,
-      premium: `${(20000 * multiplier).toLocaleString()} checkouts/month blocked`,
+      basic: `${(14000 * multiplier).toLocaleString()}`,
+      premium: `${(20000 * multiplier).toLocaleString()}`,
       description: isPremium ? "All orders automatically scanned" : "Orders scanned only when requested",
       basicDesc: "Manual verification when requested by seller",
       premiumDesc: "Automatic scanning of all orders",
-      basicSavings: `₹${(300000 * multiplier).toLocaleString()}/month shipping savings`,
-      premiumSavings: `₹${(350000 * multiplier).toLocaleString()}/month shipping savings`,
       locked: false
     },
     {
@@ -36,56 +34,46 @@ const ProtectionMetrics = ({ isPremium, timeFrame, onUpgrade, sellerName }: Prot
       description: isPremium ? "Network + sabotage protection active" : "Network-level fraud protection only",
       basicDesc: "Network-level fraud detection only",
       premiumDesc: "Network + competitor sabotage protection",
-      basicSavings: "Standard review protection",
-      premiumSavings: "Enhanced sabotage detection",
       locked: false
     },
     {
       title: "Customer Doorstep Verifications",
       icon: Eye,
-      basic: `82% of orders under OBD (~${(27000 * multiplier).toLocaleString()} orders)`,
-      premium: `90% of orders under OBD (~${(29160 * multiplier).toLocaleString()} orders)`,
+      basic: `${(27000 * multiplier).toLocaleString()} orders`,
+      premium: `${(32000 * multiplier).toLocaleString()} orders`,
       description: isPremium ? "Configurable for all product values" : "Only for non-sensitive products >₹800",
       basicDesc: "Non-sensitive products >₹800 only",
       premiumDesc: "Configurable for products <₹800 too",
-      basicSavings: `₹${(5000000 * multiplier).toLocaleString()}/month return shipping savings`,
-      premiumSavings: `₹${(5020000 * multiplier).toLocaleString()}/month return shipping savings`,
       locked: false
     },
     {
       title: "Return Frauds Caught",
       icon: RotateCcw,
-      basic: `~${700 * multiplier} returns flagged`,
-      premium: `~${800 * multiplier} returns flagged`,
+      basic: `${700 * multiplier}`,
+      premium: `${800 * multiplier}`,
       description: isPremium ? "Custom SmartCheck lists active" : "Basic fraud signals detected",
       basicDesc: "Clear fraud signals detected only",
       premiumDesc: "Custom brand x vertical checks",
-      basicSavings: `₹${(150000 * multiplier).toLocaleString()}/month shipping cost saved`,
-      premiumSavings: `₹${(164000 * multiplier).toLocaleString()}/month shipping cost saved`,
       locked: false
     },
     {
       title: "Part Payment Orders",
       icon: CreditCard,
-      basic: `${(54000 * multiplier).toLocaleString()} checkouts/month`,
-      premium: `${(60000 * multiplier).toLocaleString()} checkouts/month`,
+      basic: `${(54000 * multiplier).toLocaleString()}`,
+      premium: `${(60000 * multiplier).toLocaleString()}`,
       description: isPremium ? "Seller-configurable rules" : "Platform-driven protection",
       basicDesc: "Platform sets partial payments",
       premiumDesc: "Seller-configurable payment rules",
-      basicSavings: `₹${(700000 * multiplier).toLocaleString()}/month shipping savings`,
-      premiumSavings: `₹${(770000 * multiplier).toLocaleString()}/month shipping savings`,
       locked: false
     },
     {
       title: "SPF Payout",
       icon: DollarSign,
       basic: `₹${(2000000 * multiplier).toLocaleString()}/month`,
-      premium: `₹${(2200000 * multiplier).toLocaleString()}/month`,
-      description: isPremium ? "Enhanced ceiling (1% higher)" : "Standard ceiling limits",
+      premium: `₹${(2020000 * multiplier).toLocaleString()}/month`,
+      description: isPremium ? "Enhanced ceiling (extra ₹20,000)" : "Standard ceiling limits",
       basicDesc: "Standard SPF ceiling",
-      premiumDesc: "Enhanced ceiling (1% higher)",
-      basicSavings: "Standard claim limits",
-      premiumSavings: "Higher claim ceiling",
+      premiumDesc: "Enhanced ceiling (extra ₹20,000)",
       locked: false
     }
   ];
@@ -138,7 +126,6 @@ const ProtectionMetrics = ({ isPremium, timeFrame, onUpgrade, sellerName }: Prot
                       </TooltipTrigger>
                       <TooltipContent>
                         <p className="text-sm">{metric.premiumDesc}</p>
-                        <p className="text-xs text-gray-500 mt-1">{metric.premiumSavings}</p>
                       </TooltipContent>
                     </Tooltip>
                   )}
@@ -150,9 +137,6 @@ const ProtectionMetrics = ({ isPremium, timeFrame, onUpgrade, sellerName }: Prot
                   <div className="text-lg font-bold text-blue-600">
                     {isPremium ? metric.premium : metric.basic}
                   </div>
-                  <p className="text-xs text-green-600 font-medium">
-                    {isPremium ? metric.premiumSavings : metric.basicSavings}
-                  </p>
                   <p className="text-xs text-gray-500">{metric.description}</p>
                 </div>
               </CardContent>
@@ -177,13 +161,13 @@ const ProtectionMetrics = ({ isPremium, timeFrame, onUpgrade, sellerName }: Prot
                       </div>
                       <Lock className="w-4 h-4 text-gray-400" />
                     </div>
-                    <h4 className="font-semibold text-sm mb-1">{feature.title}</h4>
+                    <h4 className="font-semibold text-sm">{feature.title}</h4>
                     <div className="text-lg font-bold text-yellow-600 mb-1">
                       {feature.count}
                     </div>
                     <p className="text-xs text-gray-500">{feature.description}</p>
                   </CardContent>
-                </Card>
+                </div>
               ))}
             </div>
           </div>
