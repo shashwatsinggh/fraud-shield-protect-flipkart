@@ -8,9 +8,10 @@ import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/comp
 interface HeroSectionProps {
   isPremium: boolean;
   onUpgrade: () => void;
+  sellerName: string;
 }
 
-const HeroSection = ({ isPremium, onUpgrade }: HeroSectionProps) => {
+const HeroSection = ({ isPremium, onUpgrade, sellerName }: HeroSectionProps) => {
   return (
     <TooltipProvider>
       <Card className="bg-gradient-to-r from-blue-600 to-blue-500 text-white border-0 shadow-xl">
@@ -38,19 +39,19 @@ const HeroSection = ({ isPremium, onUpgrade }: HeroSectionProps) => {
               <div>
                 <h2 className="text-2xl lg:text-3xl font-bold mb-2">
                   {isPremium 
-                    ? "Premium Protection Active" 
-                    : "Basic Protection Enabled"
+                    ? `Premium Protection Active for ${sellerName}` 
+                    : `Basic Protection Enabled for ${sellerName}`
                   }
                 </h2>
                 <p className="text-blue-100 text-lg mb-2">
                   {isPremium
                     ? "Advanced fraud protection with automatic scanning and custom controls"
-                    : "Essential fraud protection with manual request-based verification"
+                    : "Essential fraud protection - only requested orders are scanned for fraud"
                   }
                 </p>
                 {!isPremium && (
                   <p className="text-blue-200 text-sm">
-                    Unlock automatic scanning, advanced controls, and enhanced claim limits with Premium
+                    Unlock automatic scanning of all orders, advanced controls, and enhanced claim limits with Premium
                   </p>
                 )}
               </div>
@@ -72,7 +73,7 @@ const HeroSection = ({ isPremium, onUpgrade }: HeroSectionProps) => {
                   <div className="text-center">
                     <div className="text-3xl font-bold">₹2,999</div>
                     <div className="text-blue-100">per month</div>
-                    <div className="text-xs text-blue-200 mt-1">Save ₹79,450 more annually</div>
+                    <div className="text-xs text-blue-200 mt-1">Save an additional ₹1,64,000 monthly</div>
                   </div>
                   <Button 
                     onClick={onUpgrade}

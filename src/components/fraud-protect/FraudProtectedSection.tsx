@@ -7,15 +7,16 @@ interface FraudProtectedSectionProps {
   isPremium: boolean;
   timeFrame: string;
   onTimeFrameChange: (value: string) => void;
+  sellerName: string;
 }
 
-const FraudProtectedSection = ({ isPremium, timeFrame, onTimeFrameChange }: FraudProtectedSectionProps) => {
+const FraudProtectedSection = ({ isPremium, timeFrame, onTimeFrameChange, sellerName }: FraudProtectedSectionProps) => {
   const getDataForTimeFrame = (timeFrame: string) => {
     const multiplier = timeFrame === "30" ? 1 : timeFrame === "90" ? 3 : 12;
     return {
-      ordersProtected: (isPremium ? 2847 : 1234) * multiplier,
-      moneySaved: (isPremium ? 124680 : 45230) * multiplier,
-      fraudsBlocked: (isPremium ? 156 : 67) * multiplier
+      ordersProtected: (isPremium ? 20000 : 14000) * multiplier,
+      moneySaved: (isPremium ? 1184000 : 1000000) * multiplier,
+      fraudsBlocked: (isPremium ? 800 : 700) * multiplier
     };
   };
 
@@ -28,7 +29,7 @@ const FraudProtectedSection = ({ isPremium, timeFrame, onTimeFrameChange }: Frau
           <div>
             <CardTitle className="flex items-center gap-2">
               <Shield className="w-5 h-5 text-blue-600" />
-              Fraud Protected for you
+              Fraud Protected for {sellerName}
             </CardTitle>
             <CardDescription>
               Your fraud protection performance overview

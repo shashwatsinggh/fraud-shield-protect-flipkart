@@ -24,6 +24,9 @@ const FraudProtectDashboard = () => {
   const [showCustomPlanChat, setShowCustomPlanChat] = useState(false);
   const [timeFrame, setTimeFrame] = useState("30");
 
+  // Seller information - in a real app this would come from user context
+  const sellerName = "RedTape";
+
   const handleUpgrade = (couponCode?: string) => {
     if (couponCode === "PREMIUM100") {
       setIsPremium(true);
@@ -40,7 +43,7 @@ const FraudProtectDashboard = () => {
             <Shield className="w-8 h-8 text-white" />
           </div>
           <div>
-            <h1 className="text-3xl font-bold text-gray-900">Fraud Protect</h1>
+            <h1 className="text-3xl font-bold text-gray-900">Fraud Protect for {sellerName}</h1>
             <p className="text-gray-600">Advanced seller protection and fraud prevention</p>
           </div>
         </div>
@@ -49,6 +52,7 @@ const FraudProtectDashboard = () => {
         <HeroSection 
           isPremium={isPremium} 
           onUpgrade={() => setShowPricingModal(true)}
+          sellerName={sellerName}
         />
 
         {/* Fraud Protected Section */}
@@ -57,6 +61,7 @@ const FraudProtectDashboard = () => {
             isPremium={isPremium} 
             timeFrame={timeFrame}
             onTimeFrameChange={setTimeFrame}
+            sellerName={sellerName}
           />
         </div>
 
@@ -67,7 +72,7 @@ const FraudProtectDashboard = () => {
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
                   <Crown className="w-5 h-5 text-yellow-500" />
-                  Total Money Saved
+                  Total Money Saved for {sellerName}
                 </CardTitle>
                 <CardDescription>
                   Your fraud protection savings this {timeFrame === "30" ? "month" : timeFrame === "90" ? "quarter" : "year"}
@@ -76,7 +81,7 @@ const FraudProtectDashboard = () => {
               <CardContent>
                 <div className="text-center p-8">
                   <div className="text-6xl font-bold bg-gradient-to-r from-yellow-600 to-yellow-700 bg-clip-text text-transparent mb-4">
-                    ₹{(124680 * (timeFrame === "30" ? 1 : timeFrame === "90" ? 3 : 12)).toLocaleString()}
+                    ₹{(1184000 * (timeFrame === "30" ? 1 : timeFrame === "90" ? 3 : 12)).toLocaleString()}
                   </div>
                   <div className="text-lg text-gray-600">Protected from fraud losses</div>
                 </div>
@@ -86,7 +91,8 @@ const FraudProtectDashboard = () => {
             <MoneySavedComparison 
               isPremium={isPremium} 
               timeFrame={timeFrame}
-              onUpgrade={() => setShowPricingModal(true)} 
+              onUpgrade={() => setShowPricingModal(true)}
+              sellerName={sellerName}
             />
           )}
         </div>
@@ -96,16 +102,26 @@ const FraudProtectDashboard = () => {
           <ProtectionMetrics 
             isPremium={isPremium} 
             timeFrame={timeFrame}
-            onUpgrade={() => setShowPricingModal(true)} 
+            onUpgrade={() => setShowPricingModal(true)}
+            sellerName={sellerName}
           />
         </div>
 
         {/* Fraud Activity Dashboard - Always show but blurred for Basic */}
         <div className="mt-8">
-          <FraudActivityDashboard isPremium={isPremium} />
+          <FraudActivityDashboard isPremium={isPremium} sellerName={sellerName} />
         </div>
 
-        {/* AI Plan Advisor CTA for Basic Users */}
+        {/* Plan Section */}
+        <div className="mt-8">
+          {isPremium ? (
+            <PlanBenefits sellerName={sellerName} />
+          ) : (
+            <PlanComparison onUpgrade={() => setShowPricingModal(true)} sellerName={sellerName} />
+          )}
+        </div>
+
+        {/* AI Plan Advisor CTA for Basic Users - moved here */}
         {!isPremium && (
           <div className="mt-8">
             <Card className="border-2 border-dashed border-blue-300 bg-gradient-to-r from-blue-50 to-blue-100">
@@ -115,7 +131,7 @@ const FraudProtectDashboard = () => {
                     <div className="w-16 h-16 bg-gradient-to-r from-blue-600 to-blue-500 rounded-full flex items-center justify-center mx-auto mb-3">
                       <Crown className="w-8 h-8 text-white" />
                     </div>
-                    <h3 className="text-xl font-bold text-gray-900 mb-2">AI Plan Advisor</h3>
+                    <h3 className="text-xl font-bold text-gray-900 mb-2">AI Plan Advisor for {sellerName}</h3>
                     <p className="text-gray-600">Get personalized fraud protection recommendations based on your business needs</p>
                   </div>
                   <Button 
@@ -129,29 +145,6 @@ const FraudProtectDashboard = () => {
                 </div>
               </CardContent>
             </Card>
-          </div>
-        )}
-
-        {/* Plan Section */}
-        <div className="mt-8">
-          {isPremium ? (
-            <PlanBenefits />
-          ) : (
-            <PlanComparison onUpgrade={() => setShowPricingModal(true)} />
-          )}
-        </div>
-
-        {/* Single Upgrade CTA for Basic users */}
-        {!isPremium && (
-          <div className="mt-8 text-center">
-            <Button 
-              size="lg" 
-              onClick={() => setShowPricingModal(true)}
-              className="bg-gradient-to-r from-blue-600 to-blue-500 hover:from-blue-700 hover:to-blue-600"
-            >
-              <Crown className="w-4 h-4 mr-2" />
-              Upgrade to Premium
-            </Button>
           </div>
         )}
 
@@ -170,16 +163,18 @@ const FraudProtectDashboard = () => {
           isOpen={showPricingModal} 
           onClose={() => setShowPricingModal(false)}
           onUpgrade={handleUpgrade}
+          sellerName={sellerName}
         />
         
         <CustomPlanChatbot 
           isOpen={showCustomPlanChat} 
-          onClose={() => setShowCustomPlanChat(false)} 
+          onClose={() => setShowCustomPlanChat(false)}
+          sellerName={sellerName}
         />
       </div>
 
       {/* Static AI Fraud Chatbot - Only for Premium users */}
-      <StaticAIFraudChatbot isPremium={isPremium} />
+      <StaticAIFraudChatbot isPremium={isPremium} sellerName={sellerName} />
     </div>
   );
 };

@@ -9,12 +9,13 @@ interface MoneySavedComparisonProps {
   isPremium: boolean;
   timeFrame: string;
   onUpgrade: () => void;
+  sellerName: string;
 }
 
-const MoneySavedComparison = ({ isPremium, timeFrame, onUpgrade }: MoneySavedComparisonProps) => {
+const MoneySavedComparison = ({ isPremium, timeFrame, onUpgrade, sellerName }: MoneySavedComparisonProps) => {
   const multiplier = timeFrame === "30" ? 1 : timeFrame === "90" ? 3 : 12;
-  const basicSavings = 45230 * multiplier;
-  const premiumSavings = 124680 * multiplier;
+  const basicSavings = 1000000 * multiplier;
+  const premiumSavings = 1184000 * multiplier;
   const potentialSavings = premiumSavings - basicSavings;
 
   const period = timeFrame === "30" ? "month" : timeFrame === "90" ? "quarter" : "year";
@@ -25,7 +26,7 @@ const MoneySavedComparison = ({ isPremium, timeFrame, onUpgrade }: MoneySavedCom
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
             <TrendingUp className="w-5 h-5 text-blue-600" />
-            Money Saved Comparison
+            Money Saved Comparison for {sellerName}
           </CardTitle>
           <CardDescription>
             Basic protection vs Premium capabilities for this {period}
@@ -39,9 +40,10 @@ const MoneySavedComparison = ({ isPremium, timeFrame, onUpgrade }: MoneySavedCom
               <div className="text-4xl font-bold text-gray-700 mb-2">₹{basicSavings.toLocaleString()}</div>
               <div className="text-sm text-gray-600 mb-2">Saved this {period}</div>
               <div className="text-xs text-gray-500">
-                • Orders verified on request
+                • Orders verified only when requested
                 • Network-level review protection
                 • Standard claim limits
+                • Non-sensitive products >₹800 only
               </div>
             </div>
 
@@ -60,7 +62,7 @@ const MoneySavedComparison = ({ isPremium, timeFrame, onUpgrade }: MoneySavedCom
                     <Info className="w-4 h-4 text-yellow-600" />
                   </TooltipTrigger>
                   <TooltipContent>
-                    <p>Based on automatic scanning and enhanced protection features</p>
+                    <p>Based on automatic scanning of all orders and enhanced protection features</p>
                   </TooltipContent>
                 </Tooltip>
               </div>
@@ -69,6 +71,7 @@ const MoneySavedComparison = ({ isPremium, timeFrame, onUpgrade }: MoneySavedCom
                 • All orders auto-scanned
                 • Advanced sabotage protection
                 • Enhanced claim limits (1% higher SPF)
+                • Products <₹800 also covered
               </div>
               
               {!isPremium && (
