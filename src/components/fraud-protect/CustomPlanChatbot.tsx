@@ -9,9 +9,10 @@ import { useState, useEffect } from "react";
 interface CustomPlanChatbotProps {
   isOpen: boolean;
   onClose: () => void;
+  sellerName: string;
 }
 
-const CustomPlanChatbot = ({ isOpen, onClose }: CustomPlanChatbotProps) => {
+const CustomPlanChatbot = ({ isOpen, onClose, sellerName }: CustomPlanChatbotProps) => {
   const [chatStep, setChatStep] = useState(1);
   const [selectedFeatures, setSelectedFeatures] = useState<string[]>([]);
   const [aiRecommendations, setAiRecommendations] = useState<string[]>([]);
@@ -34,7 +35,7 @@ const CustomPlanChatbot = ({ isOpen, onClose }: CustomPlanChatbotProps) => {
   useEffect(() => {
     if (isOpen && chatStep === 1) {
       setIsTyping(true);
-      const fullText = `Based on our understanding of your products and scale of operations, and considering common fraud types like ${fraudTypes.join(", ")}, we suggest the following protection plan tailored for your business needs.`;
+      const fullText = `Based on our understanding of ${sellerName}'s products and scale of operations, and considering common fraud types like ${fraudTypes.join(", ")}, we suggest the following protection plan tailored for your business needs.`;
       
       let currentText = "";
       let index = 0;
@@ -56,7 +57,7 @@ const CustomPlanChatbot = ({ isOpen, onClose }: CustomPlanChatbotProps) => {
 
       return () => clearInterval(typeWriter);
     }
-  }, [isOpen, chatStep]);
+  }, [isOpen, chatStep, sellerName]);
 
   const handleFeatureToggle = (featureId: string) => {
     setSelectedFeatures(prev => 
@@ -87,7 +88,7 @@ const CustomPlanChatbot = ({ isOpen, onClose }: CustomPlanChatbotProps) => {
               </div>
               <div className="bg-blue-50 p-4 rounded-lg flex-1">
                 <div className="flex items-center gap-2 mb-2">
-                  <span className="text-sm font-semibold">AI Plan Advisor</span>
+                  <span className="text-sm font-semibold">AI Plan Advisor for {sellerName}</span>
                   {isTyping && <Loader2 className="w-3 h-3 animate-spin" />}
                 </div>
                 <p className="text-sm">
@@ -108,7 +109,7 @@ const CustomPlanChatbot = ({ isOpen, onClose }: CustomPlanChatbotProps) => {
               </div>
               <div className="bg-blue-50 p-4 rounded-lg flex-1">
                 <p className="text-sm font-semibold mb-2">
-                  Recommended Protection Plan
+                  Recommended Protection Plan for {sellerName}
                 </p>
                 <p className="text-sm">
                   Based on your store metrics and common fraud patterns, here's what we suggest:
@@ -142,7 +143,7 @@ const CustomPlanChatbot = ({ isOpen, onClose }: CustomPlanChatbotProps) => {
             <Card className="bg-gradient-to-r from-blue-50 to-blue-100">
               <CardContent className="p-4">
                 <div className="flex justify-between items-center">
-                  <span className="font-semibold">Custom Plan Cost:</span>
+                  <span className="font-semibold">Custom Plan Cost for {sellerName}:</span>
                   <span className="text-xl font-bold text-blue-600">₹{totalPrice.toLocaleString()}</span>
                 </div>
                 <div className="text-xs text-gray-600 mt-1">
@@ -173,7 +174,7 @@ const CustomPlanChatbot = ({ isOpen, onClose }: CustomPlanChatbotProps) => {
         <DialogHeader>
           <DialogTitle className="flex items-center gap-2">
             <Bot className="w-5 h-5 text-blue-600" />
-            AI Plan Advisor
+            AI Plan Advisor for {sellerName}
           </DialogTitle>
           <DialogDescription>
             Let me create a personalized fraud protection plan for your store

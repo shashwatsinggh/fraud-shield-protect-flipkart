@@ -10,13 +10,13 @@ import { useState, useMemo } from "react";
 
 interface FraudActivityDashboardProps {
   isPremium: boolean;
+  sellerName: string;
 }
 
-const FraudActivityDashboard = ({ isPremium }: FraudActivityDashboardProps) => {
+const FraudActivityDashboard = ({ isPremium, sellerName }: FraudActivityDashboardProps) => {
   const [selectedActivity, setSelectedActivity] = useState<any>(null);
   const [filterType, setFilterType] = useState("all");
 
-  // Generate 100+ fraud activities with varied data
   const generateActivities = () => {
     const types = [
       { id: "order-verification", name: "Order Verification", icon: Shield, count: 15 },
@@ -142,7 +142,7 @@ const FraudActivityDashboard = ({ isPremium }: FraudActivityDashboardProps) => {
 
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
-            Fraud Protection Activity
+            Fraud Protection Activity for {sellerName}
             <Lock className="w-4 h-4 text-gray-400" />
           </CardTitle>
           <CardDescription>
@@ -203,7 +203,7 @@ const FraudActivityDashboard = ({ isPremium }: FraudActivityDashboardProps) => {
     <Card>
       <CardHeader>
         <CardTitle className="flex items-center gap-2">
-          Fraud Protection Activity
+          Fraud Protection Activity for {sellerName}
         </CardTitle>
         <CardDescription>
           Comprehensive log of all fraud prevention actions taken ({activities.length} total incidents)
