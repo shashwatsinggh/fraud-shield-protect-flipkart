@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -16,6 +15,7 @@ import TestimonialCarousel from "./fraud-protect/TestimonialCarousel";
 import FAQSection from "./fraud-protect/FAQSection";
 import PricingModal from "./fraud-protect/PricingModal";
 import CustomPlanChatbot from "./fraud-protect/CustomPlanChatbot";
+import StaticAIFraudChatbot from "./fraud-protect/StaticAIFraudChatbot";
 
 const FraudProtectDashboard = () => {
   const [isPremium, setIsPremium] = useState(false);
@@ -152,6 +152,9 @@ const FraudProtectDashboard = () => {
           onClose={() => setShowCustomPlanChat(false)} 
         />
       </div>
+
+      {/* Static AI Fraud Chatbot - Only for Premium users */}
+      <StaticAIFraudChatbot isPremium={isPremium} />
     </div>
   );
 };
