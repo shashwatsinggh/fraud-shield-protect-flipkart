@@ -1,7 +1,8 @@
+
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Shield, Star, Eye, RotateCcw, CreditCard, DollarSign, Lock, Crown, Info, MapPin, UserCheck, CheckSquare } from "lucide-react";
+import { Shield, Star, Eye, RotateCcw, CreditCard, DollarSign, Lock, Crown, Info, MapPin, UserCheck, MessageSquare } from "lucide-react";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 
 interface ProtectionMetricsProps {
@@ -53,7 +54,7 @@ const ProtectionMetrics = ({ isPremium, timeFrame, onUpgrade, sellerName }: Prot
       icon: RotateCcw,
       basic: `${700 * multiplier}`,
       premium: `${800 * multiplier}`,
-      description: isPremium ? "Custom brand verification lists (2 per quarter)" : "Basic fraud signals detected",
+      description: isPremium ? "Custom brand x vertical checks (2 per quarter)" : "Clear fraud signals detected only",
       basicDesc: "Clear fraud signals detected only",
       premiumDesc: "Custom brand x vertical checks (2 per quarter)",
       premiumFeature: "Custom brand checks",
@@ -86,7 +87,7 @@ const ProtectionMetrics = ({ isPremium, timeFrame, onUpgrade, sellerName }: Prot
       icon: MapPin,
       basic: "Not available",
       premium: "7/10 used",
-      description: isPremium ? "Block high-risk delivery locations" : "Premium feature only",
+      description: isPremium ? "Block high-risk delivery locations (10 slots per quarter)" : "Pincode blocking",
       basicDesc: "Not available in basic plan",
       premiumDesc: "Block high-risk delivery locations (10 slots per quarter)",
       premiumFeature: "Pincode blocking",
@@ -97,21 +98,21 @@ const ProtectionMetrics = ({ isPremium, timeFrame, onUpgrade, sellerName }: Prot
       icon: UserCheck,
       basic: "Not available",
       premium: "1/2 used",
-      description: isPremium ? "Request delivery personnel changes" : "Premium feature only",
+      description: isPremium ? "Request delivery personnel changes (2 per quarter)" : "Executive changes",
       basicDesc: "Not available in basic plan",
       premiumDesc: "Request delivery personnel changes (2 per quarter)",
       premiumFeature: "Executive changes",
       locked: true
     },
     {
-      title: "Full Analytics Dashboard",
-      icon: CheckSquare,
-      basic: "Limited view",
-      premium: "Complete access",
-      description: isPremium ? "Complete fraud protection insights" : "Basic metrics only",
-      basicDesc: "Basic fraud protection metrics only",
-      premiumDesc: "Complete fraud protection insights and trends",
-      premiumFeature: "Full analytics",
+      title: "Review Takedown Requests",
+      icon: MessageSquare,
+      basic: "Not available",
+      premium: "12 pending",
+      description: isPremium ? "Manual review takedown requests" : "Manual takedowns",
+      basicDesc: "Not available in basic plan",
+      premiumDesc: "Manual review takedown requests",
+      premiumFeature: "Manual takedowns",
       locked: true
     }
   ];
