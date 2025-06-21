@@ -24,7 +24,7 @@ const ProtectionMetrics = ({ isPremium, timeFrame, onUpgrade, sellerName }: Prot
       description: isPremium ? "All orders automatically scanned" : "Manual verification when requested",
       basicDesc: "Manual verification when requested by seller",
       premiumDesc: "Automatic scanning of all orders",
-      premiumFeature: "Automatic scanning of all orders",
+      premiumFeature: "Auto-scan all orders",
       locked: false
     },
     {
@@ -35,7 +35,7 @@ const ProtectionMetrics = ({ isPremium, timeFrame, onUpgrade, sellerName }: Prot
       description: isPremium ? "Network + sabotage protection active" : "Network-level fraud protection only",
       basicDesc: "Network-level fraud detection only",
       premiumDesc: "Network + competitor sabotage protection",
-      premiumFeature: "Network + competitor sabotage protection",
+      premiumFeature: "Sabotage protection",
       locked: false
     },
     {
@@ -43,10 +43,10 @@ const ProtectionMetrics = ({ isPremium, timeFrame, onUpgrade, sellerName }: Prot
       icon: Eye,
       basic: `${(27000 * multiplier).toLocaleString()} orders`,
       premium: `${(32000 * multiplier).toLocaleString()} orders`,
-      description: isPremium ? "Configurable for all product values" : "Only for non-sensitive products >₹800",
+      description: isPremium ? "Configurable for all product values" : "Non-sensitive products >₹800 only. First 100 free, then ₹10/order",
       basicDesc: "Non-sensitive products >₹800 only. First 100 free, then ₹10/order",
       premiumDesc: "Configurable for products <₹800 too",
-      premiumFeature: "Configurable for products <₹800 too",
+      premiumFeature: "All product values",
       locked: false
     },
     {
@@ -54,10 +54,10 @@ const ProtectionMetrics = ({ isPremium, timeFrame, onUpgrade, sellerName }: Prot
       icon: RotateCcw,
       basic: `${700 * multiplier}`,
       premium: `${800 * multiplier}`,
-      description: isPremium ? "Custom SmartCheck lists active" : "Basic fraud signals detected",
+      description: isPremium ? "Custom brand verification lists (2 per quarter)" : "Basic fraud signals detected",
       basicDesc: "Clear fraud signals detected only",
       premiumDesc: "Custom brand x vertical checks (2 per quarter)",
-      premiumFeature: "Custom brand x vertical checks (2 per quarter)",
+      premiumFeature: "Custom brand checks",
       locked: false
     },
     {
@@ -65,10 +65,10 @@ const ProtectionMetrics = ({ isPremium, timeFrame, onUpgrade, sellerName }: Prot
       icon: CreditCard,
       basic: `${(54000 * multiplier).toLocaleString()}`,
       premium: `${(60000 * multiplier).toLocaleString()}`,
-      description: isPremium ? "Seller-configurable rules" : "Platform-driven protection",
+      description: isPremium ? "Seller-configurable advance collection rules" : "Platform-driven protection",
       basicDesc: "Platform sets partial digital payments for COD",
       premiumDesc: "Seller-configurable advance collection rules",
-      premiumFeature: "Seller-configurable advance collection rules",
+      premiumFeature: "Custom COD rules",
       locked: false
     },
     {
@@ -79,7 +79,7 @@ const ProtectionMetrics = ({ isPremium, timeFrame, onUpgrade, sellerName }: Prot
       description: isPremium ? "Enhanced ceiling (extra ₹20,000)" : "Standard ceiling limits",
       basicDesc: "Standard SPF ceiling",
       premiumDesc: "Enhanced ceiling (extra ₹20,000)",
-      premiumFeature: "Enhanced ceiling (extra ₹20,000)",
+      premiumFeature: "Higher ceiling",
       locked: false
     }
   ];
