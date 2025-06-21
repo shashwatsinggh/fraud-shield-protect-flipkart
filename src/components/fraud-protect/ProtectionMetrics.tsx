@@ -167,7 +167,7 @@ const ProtectionMetrics = ({ isPremium, timeFrame, onUpgrade, sellerName }: Prot
                     </div>
                     <p className="text-xs text-gray-500">{feature.description}</p>
                   </CardContent>
-                </div>
+                </Card>
               ))}
             </div>
           </div>
