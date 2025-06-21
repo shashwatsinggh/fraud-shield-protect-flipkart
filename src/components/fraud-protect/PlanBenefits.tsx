@@ -30,13 +30,13 @@ const PlanBenefits = ({ sellerName }: PlanBenefitsProps) => {
     {
       icon: RotateCcw,
       title: "Smart Return Checks",
-      description: "Custom brand verification lists",
+      description: "Custom brand verification lists (2 per quarter)",
       status: "Active"
     },
     {
       icon: CreditCard,
-      title: "Configurable Part Payments",
-      description: "Seller-defined payment rules",
+      title: "Configurable COD Advance Collection",
+      description: "Seller-defined advance collection rules",
       status: "Active"
     },
     {

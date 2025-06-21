@@ -13,10 +13,19 @@ interface FraudProtectedSectionProps {
 const FraudProtectedSection = ({ isPremium, timeFrame, onTimeFrameChange, sellerName }: FraudProtectedSectionProps) => {
   const getDataForTimeFrame = (timeFrame: string) => {
     const multiplier = timeFrame === "30" ? 1 : timeFrame === "90" ? 3 : 12;
+    
+    // Individual metrics
+    const fraudOrdersProtected = (isPremium ? 20000 : 14000) * multiplier;
+    const doorstepVerifications = (isPremium ? 32000 : 27000) * multiplier;
+    const codAdvanceCollection = (isPremium ? 60000 : 54000) * multiplier;
+    
+    const reviewTakedowns = (isPremium ? 200 : 100) * multiplier;
+    const returnFrauds = (isPremium ? 800 : 700) * multiplier;
+    
     return {
-      ordersProtected: (isPremium ? 20000 : 14000) * multiplier,
+      ordersProtected: fraudOrdersProtected + doorstepVerifications + codAdvanceCollection,
       moneySaved: (isPremium ? 1184000 : 1000000) * multiplier,
-      fraudsBlocked: (isPremium ? 800 : 700) * multiplier
+      fraudsBlocked: reviewTakedowns + returnFrauds
     };
   };
 
