@@ -1,8 +1,7 @@
-
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Shield, Star, Eye, RotateCcw, CreditCard, DollarSign, Lock, Crown, Info } from "lucide-react";
+import { Shield, Star, Eye, RotateCcw, CreditCard, DollarSign, Lock, Crown, Info, MapPin, UserCheck, CheckSquare } from "lucide-react";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 
 interface ProtectionMetricsProps {
@@ -81,6 +80,39 @@ const ProtectionMetrics = ({ isPremium, timeFrame, onUpgrade, sellerName }: Prot
       premiumDesc: "Enhanced ceiling (extra ₹20,000)",
       premiumFeature: "Higher ceiling",
       locked: false
+    },
+    {
+      title: "Pincode Serviceability Blocks",
+      icon: MapPin,
+      basic: "Not available",
+      premium: "7/10 used",
+      description: isPremium ? "Block high-risk delivery locations" : "Premium feature only",
+      basicDesc: "Not available in basic plan",
+      premiumDesc: "Block high-risk delivery locations (10 slots per quarter)",
+      premiumFeature: "Pincode blocking",
+      locked: true
+    },
+    {
+      title: "Field Executive Change Requests",
+      icon: UserCheck,
+      basic: "Not available",
+      premium: "1/2 used",
+      description: isPremium ? "Request delivery personnel changes" : "Premium feature only",
+      basicDesc: "Not available in basic plan",
+      premiumDesc: "Request delivery personnel changes (2 per quarter)",
+      premiumFeature: "Executive changes",
+      locked: true
+    },
+    {
+      title: "Full Analytics Dashboard",
+      icon: CheckSquare,
+      basic: "Limited view",
+      premium: "Complete access",
+      description: isPremium ? "Complete fraud protection insights" : "Basic metrics only",
+      basicDesc: "Basic fraud protection metrics only",
+      premiumDesc: "Complete fraud protection insights and trends",
+      premiumFeature: "Full analytics",
+      locked: true
     }
   ];
 
@@ -116,7 +148,7 @@ const ProtectionMetrics = ({ isPremium, timeFrame, onUpgrade, sellerName }: Prot
         {/* Main Metrics */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           {metrics.map((metric, index) => (
-            <Card key={index} className="relative">
+            <Card key={index} className={`relative ${metric.locked && !isPremium ? 'opacity-60' : ''}`}>
               <CardHeader className="pb-3">
                 <div className="flex items-center justify-between">
                   <div className="p-2 bg-blue-100 rounded-lg">
@@ -134,6 +166,9 @@ const ProtectionMetrics = ({ isPremium, timeFrame, onUpgrade, sellerName }: Prot
                         <p className="text-sm">{metric.premiumDesc}</p>
                       </TooltipContent>
                     </Tooltip>
+                  )}
+                  {metric.locked && !isPremium && (
+                    <Lock className="w-4 h-4 text-gray-400 absolute top-2 right-2" />
                   )}
                 </div>
               </CardHeader>
